@@ -3,6 +3,7 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
+import { getAppointmentsForDay } from "helpers/selectors";
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -12,16 +13,24 @@ export default function Application(props) {
   });
 
   const setDay = day => setState(prev => ({ ...prev, day }));
-  const setDays = days => setState(prev => ({ ...prev, days }));
 
+  // Fetching and setting days/appointments state data
   useEffect(() => {
-    const URL = `/api/days`;
-    axios.get(URL).then(response => {
-      setDays([...response.data]);
+    Promise.all([
+      axios.get('/api/days'),
+      axios.get('/api/appointments')
+    ]).then((all) => {
+      setState(prev => ({
+        ...prev,
+        days: all[0].data,
+        appointments: all[1].data
+      }));
     });
   }, []);
 
-  const appointmentList = Object.values(state.appointments).map(appointment => {
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+
+  const appointmentList = dailyAppointments.map(appointment => {
     return <Appointment 
       key={appointment.id} 
       {...appointment} 
