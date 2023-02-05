@@ -45,8 +45,8 @@ const appointments = {
 
 export default function Application(props) {
 
-
   const [days, setDays] = useState([]);
+  const [day, setDay] = useState("Monday");
 
   useEffect(() => {
     const URL = `/api/days`;
@@ -54,8 +54,6 @@ export default function Application(props) {
       setDays([...response.data]);
     });
   }, []);
-
-  const [day, setDay] = useState("Monday");
 
   const appointmentList = Object.values(appointments).map(appointment => {
     return <Appointment 
