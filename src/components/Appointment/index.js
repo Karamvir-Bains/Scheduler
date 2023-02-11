@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "components/Appointment/styles.scss";
 import Header from "./Header";
 import Show from "./Show";
@@ -11,22 +11,32 @@ export default function Appointment(props) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
-  const SAVING = "SAVING";
-
-  const statusMessage = "Saving";
+  const STATUS = "STATUS";
+  const [statusMessage, setstatusMessage] = useState("");
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
   function save(name, interviewer) {
-    transition(SAVING);
+    setstatusMessage("Saving");
+    transition(STATUS);
+
     const interview = {
       student: name,
       interviewer
     };
+
     props.bookInterview(props.id, interview)
     .then(() => transition(SHOW));
+  }
+
+  function deleteAppointment() {
+    setstatusMessage("Deleting");
+    transition(STATUS);
+
+    props.cancelInterview(props.id)
+    .then(() => transition(EMPTY));
   }
 
   return(
@@ -37,6 +47,7 @@ export default function Appointment(props) {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
+          onDelete={deleteAppointment}
         />
       )}
       {mode === CREATE && (
@@ -45,7 +56,7 @@ export default function Appointment(props) {
           interviewers={props.interviewers}
         />
       )}
-      {mode === SAVING && (
+      {mode === STATUS && (
         <Status
           message={statusMessage}
         />
