@@ -9,6 +9,7 @@ export default function Form(props) {
 
   const reset = () => {
     setStudent("");
+    setError("");
     setInterviewer(null);
   };
 
@@ -28,6 +29,7 @@ export default function Form(props) {
       return;
     }
   
+    setError("");
     props.onSave(student, interviewer);
   }
 
