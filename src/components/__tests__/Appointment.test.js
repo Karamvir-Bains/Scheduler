@@ -1,9 +1,9 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import Application from "components/Application";
+import { render, waitForElement } from "@testing-library/react";
+import Appointment from "components/Application";
 
 describe("Appointment", () => {
-  xit("renders without crashing", () => {
-    render(<Application />);
+  it("renders without crashing", async () => {
+    await waitForElement (() => render(<Appointment />))
   });
 });

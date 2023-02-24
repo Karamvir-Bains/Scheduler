@@ -140,7 +140,7 @@ describe("Application", () => {
 
     fireEvent.click(getByAltText(appointment, "Close"));
 
-    expect(getByTestId(appointment, "student-name-input")).toBeInTheDocument();
+    expect(getByAltText(appointment, "Add")).toBeInTheDocument();
   });
 
   it("shows the delete error when failing to delete an existing appointment", async () => {
