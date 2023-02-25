@@ -1,51 +1,30 @@
 export function getAppointmentsForDay(state, day) {
-  const days = state.days;
-  const appointments = state.appointments;
-  let appointmentArray = [];
-  const arr = [];
-  for(const index in days){
-    if(days[index].name === day){
-      appointmentArray = days[index].appointments;
-    }
-  }
+  // Match the day with the one in state and return day object
+  const selectedDay = state.days.find(index => day === index.name);
 
-  for(const appointmentId of appointmentArray){
-    for(const index in appointments){
-      if(appointmentId == index){
-        arr.push(appointments[index]);
-      }
-    }
-  }
+  // If selectedDay was not found return empty array
+  if (!selectedDay) return [];
 
-  return arr;
+  // Returns an appointment object for that selectedDay
+  return selectedDay.appointments.map(key => state.appointments[key]);
 }
 
 export function getInterview(state, interview) {
+  // Returns null if no interview is booked
   if (!interview) return null;
   
+  // Returns interviewer object
   const interviewerId = interview.interviewer;
-  const interviewer = state.interviewers[interviewerId];
-  return {...interview, interviewer: interviewer};
+  return {...interview, interviewer: state.interviewers[interviewerId]};
 }
 
 export function getInterviewersForDay(state, day) {
-  const days = state.days;
-  const interviewers = state.interviewers;
-  let interviewerArray = [];
-  const arr = [];
-  for(const index in days){
-    if(days[index].name === day){
-      interviewerArray = days[index].interviewers;
-    }
-  }
+  // Match the day with the one in state and return day object
+  const selectedDay = state.days.find(index => day === index.name);
 
-  for(const interviewerId of interviewerArray){
-    for(const index in interviewers){
-      if(interviewerId == index){
-        arr.push(interviewers[index]);
-      }
-    }
-  }
+  // If selectedDay was not found return empty array
+  if (!selectedDay) return [];
 
-  return arr;
+  // Returns an interviewers object for that selectedDay
+  return selectedDay.interviewers.map(key => state.interviewers[key]);
 }
