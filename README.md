@@ -6,18 +6,15 @@ When creating a new appointment, the user can enter any student name while the i
 
 The front end of this project is built with React and makes requests to an API to fetch and store appointment data from a database.
 
-## Final Product
-
-### Interview Scheduler
+## Interview Scheduler
+The image demonstrates creating, editing, and deleting an interview.
 !["Screenshot of Interview Scheduler"](https://github.com/Karamvir-Bains/Scheduler/blob/master/docs/Interview%20Scheduler.gif)
-
-The above image demonstrates creating, editing, and deleting an interview.
 
 ## Getting Started
 
 1. Install dependencies with `npm install`.
-2. Change your directory to Scheduler.
-3. Setup and Run the [Scheduler-API](https://github.com/lighthouse-labs/scheduler-api)
+2. Setup and Run the [Scheduler-API](https://github.com/lighthouse-labs/scheduler-api).
+3. Change your directory to Scheduler.
 4. Start the web server with `npm start`.
 5. Go to <http://localhost:8080/> in your browser.
 
