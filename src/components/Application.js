@@ -13,9 +13,11 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
+  // Selectors to get appointments and interviewers for the selected day
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
 
+  // Creates a schedule of appointments from the appointments object
   const schedule = appointments.map(appointment => {
     const interview = getInterview(state, appointment.interview);
   
@@ -32,6 +34,7 @@ export default function Application(props) {
     );
   });
 
+  // Push last component to mark end of appointments
   schedule.push(<Appointment key="last" time="5pm" />);
 
   return (

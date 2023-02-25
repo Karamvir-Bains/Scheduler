@@ -10,7 +10,7 @@ export default function useApplicationData() {
   
   const setDay = day => setState(prev => ({ ...prev, day }));
   
-  // Fetching and setting days/appointments state data
+  // Fetching and setting days, appointments, and interviewers state data
   useEffect(() => {
     Promise.all([
       axios.get('/api/days'),
@@ -26,6 +26,7 @@ export default function useApplicationData() {
     });
   }, []);
 
+  // Updates the spots remaining for the day associated with appointmentId
   const updateSpots = (appointmentId, appointments) => {
     const day = state.days.find(day => day.appointments.includes(appointmentId));
 
@@ -34,6 +35,7 @@ export default function useApplicationData() {
     return state.days.map(day => day.appointments.includes(appointmentId) ? { ...day, spots: spots } : day);
   };
   
+  // Adds new appointment to state and sends PUT request to API
   function bookInterview(id, interview) {
   
     const appointment = {
@@ -54,6 +56,7 @@ export default function useApplicationData() {
     });
   }
   
+    // Deletes appointment from state and sends DELETE request to API
   function cancelInterview(id) {
   
     const appointment = {
