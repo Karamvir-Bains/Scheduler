@@ -40,9 +40,7 @@ npm run storybook
 ### Inside Scheduler-API 
 1. Add `"test:server": "NODE_ENV=test npm start",` to your package.json file under scripts.
 2. Duplicate your `.env.development` file and name it `.env.test` change `PGDATABASE` to `scheduler_test`.
-```sh
-npm run test:server
-```
+3. Run `npm run test:server`.
 
 ### Inside Scheduler
 ```sh
