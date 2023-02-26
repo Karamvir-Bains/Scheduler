@@ -39,7 +39,7 @@ export default function useApplicationData() {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   
-  const setDay = day => dispatch({ type: SET_DAY, day })
+  const setDay = day => dispatch({ type: SET_DAY, day });
   
   // Fetching and setting days, appointments, and interviewers state data
   useEffect(() => {
@@ -66,6 +66,39 @@ export default function useApplicationData() {
 
     return state.days.map(day => day.appointments.includes(appointmentId) ? { ...day, spots: spots } : day);
   };
+
+  // WebSocket connection for multi client support
+  useEffect(() => {
+    if (!state.appointments['1']) return;
+    
+    const url = process.env.REACT_APP_WEBSOCKET_URL;
+    const client = new WebSocket(url);
+
+    client.onmessage = (event) => {
+      const response = JSON.parse(event.data);
+
+      if (response.type === "SET_INTERVIEW") {
+        const appointment = {
+          ...state.appointments[response.id],
+          interview: response.interview
+        };
+    
+        const appointments = {
+          ...state.appointments,
+          [response.id]: appointment
+        };
+
+        dispatch({ type: SET_INTERVIEW, appointments: appointments, days: updateSpots(response.id, appointments) });
+      }
+    };
+
+    return () => {
+      // WebSocket cleanup side effect
+      if (client.readyState === 1) {
+          client.close();
+      }
+    };
+  }, [state.appointments]);
   
   // Adds new appointment to state and sends PUT request to API
   function bookInterview(id, interview) {
