@@ -4,7 +4,7 @@ Interview Scheduler is a single-page application (SPA) that allows users to book
 
 When creating a new appointment, the user can enter any student name while the interviewer is chosen from a predefined list. The user can save the appointment and view the entire schedule of appointments on any day of the week. Appointments can also be edited or deleted. 
 
-The front end of this project is built with React and makes requests to an API to fetch and store appointment data from a database.
+The front end of this project is built with React and makes requests to an API to fetch and store appointment data from a database. Also, WebSockets were used to allow for multi-client support.
 
 ## Interview Scheduler
 !["Screenshot of Interview Scheduler"](https://github.com/Karamvir-Bains/Scheduler/blob/master/docs/Interview%20Scheduler.gif)
